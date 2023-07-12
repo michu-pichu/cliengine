@@ -1,6 +1,6 @@
 import cmd
 import sys
-import subprocess
+# import subprocess
 from enum import Enum
 import logging
 import signal
@@ -11,7 +11,7 @@ import argparse
 class ValidWorkers(str, Enum):
    testworker1 = 'tw1'
    testworker2 = 'tw2'
-   testworker2 = 'tw3'
+   testworker3 = 'tw3'
 
 # valid timer modes
 class ValidTimerModes(str, Enum):
@@ -23,12 +23,14 @@ class ValidTimerModes(str, Enum):
 # Base class for background worker (ThreadingBgWorker)
 from threadingbgworker import ThreadingBgWorker
 
+shellname = 'myshell'
+
 # --------- Valid Workers - Definitions ------------
 # Test class for background worker (tw)
 # ValidWorker: wt --> Class: TestBgWorker
 class TestBgWorker(ThreadingBgWorker):
     def __init__(self, name, event):
-        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1)
+        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1, cli_name=shellname)
         self.iterations = 0
 
     def addToJobRun(self):
@@ -58,14 +60,17 @@ class cliEngine(cmd.Cmd):
     def __init__(self,
                  shellname,
                  worker_events,
-                 valid_workers):
+                 valid_workers,
+                 logger):
 
         super().__init__()
         self._make_intro(shellname)
         self.background_processes = {}
         self.prompt = f'{shellname}> '
         self.events = worker_events
-        logger.info(f'{shellname} started.')
+        self.valid_workers = valid_workers
+        self.logger = logger
+        self.logger.info(f'{shellname} started.')
 
 
     def _make_intro(self, shellname):
@@ -103,7 +108,7 @@ class cliEngine(cmd.Cmd):
         
         if not check:
             print(f'Error: Process {name} does not exist or is not valid.')
-            logger.error(f'Error: Process {name} does not exist or is not valid.')
+            self.logger.error(f'Error: Process {name} does not exist or is not valid.')
             return False
         
         return True
@@ -142,7 +147,7 @@ class cliEngine(cmd.Cmd):
         # check if name is already in use
         if name in self.background_processes:
             print(f'Error: Process {name} is already running.')
-            logger.error(f'Error: Process {name} is already running.')
+            self.logger.error(f'Error: Process {name} is already running.')
             return False
         
         return True
@@ -156,7 +161,7 @@ class cliEngine(cmd.Cmd):
         # check if name is already in use
         if name not in self.background_processes:
             print(f'Error: Process {name} is not running.')
-            logger.error(f'Error: Process {name} is not running.')
+            self.logger.error(f'Error: Process {name} is not running.')
             return False
 
         return True
@@ -173,7 +178,7 @@ class cliEngine(cmd.Cmd):
         # check if name is already in use
         if name not in self.background_processes:
             print(f'Error: Process {name} is not running.')
-            logger.error(f'Error: Process {name} is not running.')
+            self.logger.error(f'Error: Process {name} is not running.')
             return False
 
         return True
@@ -182,7 +187,7 @@ class cliEngine(cmd.Cmd):
     def do_start(self, name):
         """Starts a background process with the given name."""
         print(f'Starting process: {name}')
-        logger.info(f'Starting process: {name}')
+        self.logger.info(f'Starting process: {name}')
 
         if not self.check_name_for_start(name):
             return
@@ -191,7 +196,7 @@ class cliEngine(cmd.Cmd):
         process.start()
         self.background_processes[name] = process
         print(f'Started process: {name}')
-        logger.info(f'Started process: {name}')
+        self.logger.info(f'Started process: {name}')
 
 
     def help_start(self):
@@ -205,7 +210,7 @@ class cliEngine(cmd.Cmd):
     def do_stop(self, name):
         """Stops a background process with the given name."""
         print(f'Stopping process: {name}')
-        logger.info(f'Stopping process: {name}')
+        self.logger.info(f'Stopping process: {name}')
 
         if not self.check_name_for_stop(name):
             return
@@ -214,7 +219,7 @@ class cliEngine(cmd.Cmd):
         process.stop()
         process.join()
         del self.background_processes[name]
-        logger.info(f'Stopped process: {name}')
+        self.logger.info(f'Stopped process: {name}')
         print(f'Stopped process: {name}')
 
 
@@ -232,21 +237,21 @@ class cliEngine(cmd.Cmd):
             worker_name = arguments[0]
             timer_mode = arguments[1]
             timer_value_min = arguments[2]
-            logger.debug(f'Worker name: {worker_name}, timer mode: {timer_mode}, timer value: {timer_value_min}')
+            self.logger.debug(f'Worker name: {worker_name}, timer mode: {timer_mode}, timer value: {timer_value_min}')
         elif len(arguments) == 2:
             worker_name = arguments[0]
             timer_mode = arguments[1]
-            logger.debug(f'Worker name: {worker_name}, timer mode: {timer_mode}')
+            self.logger.debug(f'Worker name: {worker_name}, timer mode: {timer_mode}')
             if timer_mode == ValidTimerModes.clear.value:
                 timer_value_min = None
             else:
                 print('Error: Invalid number of arguments.')
-                logger.error('Error: Invalid number of arguments.')
+                self.logger.error('Error: Invalid number of arguments.')
                 self.help_timer()
                 return
         else:
             print('Error: Invalid number of arguments.')
-            logger.error('Error: Invalid number of arguments.')
+            self.logger.error('Error: Invalid number of arguments.')
             self.help_timer()
             return
         
@@ -263,7 +268,7 @@ class cliEngine(cmd.Cmd):
                 break
         if not check:
             print(f'Error: Invalid timer mode {mode}.')
-            logger.error(f'Error: Invalid timer mode {mode}.')
+            self.logger.error(f'Error: Invalid timer mode {mode}.')
             self.help_timer()
             return
 
@@ -271,12 +276,12 @@ class cliEngine(cmd.Cmd):
             timer_value_min = float(timer_value_min)
         except ValueError:
             print(f'Error: Invalid timer value {timer_value_min}.')
-            logger.error(f'Error: Invalid timer value {timer_value_min}.')
+            self.logger.error(f'Error: Invalid timer value {timer_value_min}.')
             self.help_timer()
             return
         if timer_value_min <= 0:
             print(f'Error: Invalid timer value {timer_value_min}.')
-            logger.error(f'Error: Invalid timer value {timer_value_min}.')
+            self.logger.error(f'Error: Invalid timer value {timer_value_min}.')
             self.help_timer()
             return
         # set timer
@@ -290,11 +295,11 @@ class cliEngine(cmd.Cmd):
                 process.set_timer(timerMin=None, timerMode=timer_mode)
             else:
                 print(f'Error: Invalid timer mode.')
-                logger.error(f'Error: Invalid timer mode.')
+                self.logger.error(f'Error: Invalid timer mode.')
                 self.help_timer()
                 return
             print(f'Set timer: {worker_name}, timer_mode {timer_mode}, {timer_value_min} minutes.')
-            logger.info(f'Set timer: {worker_name}, timer_mode {timer_mode}, {timer_value_min} minutes.')
+            self.logger.info(f'Set timer: {worker_name}, timer_mode {timer_mode}, {timer_value_min} minutes.')
 
 
     def help_timer(self):
@@ -309,14 +314,14 @@ class cliEngine(cmd.Cmd):
 
     def do_list(self, arg):
         """Lists all background processes."""
-        logger.info('Listing all background processes.')
+        self.logger.info('Listing all background processes.')
 
         # clear events and processes
         self.clear_events_and_processes()
 
         if len(self.background_processes) == 0:
             print(' ...no background processes running.')
-            logger.info(' ...no background processes running.')
+            self.logger.info(' ...no background processes running.')
             return
 
         for name, process in self.background_processes.items():
@@ -331,7 +336,7 @@ class cliEngine(cmd.Cmd):
     # show status of a background process with the given name
     def do_status(self, name):
         """Shows the status of a background process with the given name."""
-        logger.info(f'Showing status of process: {name}')
+        self.logger.info(f'Showing status of process: {name}')
         if name not in self.background_processes:
             print('Error: Process does not exist.')
             return
@@ -357,7 +362,7 @@ class cliEngine(cmd.Cmd):
     # show status of all background processes
     def do_status_all(self, arg):
         """Shows the status of all background processes."""
-        logger.info('Showing status of all background processes.')
+        self.logger.info('Showing status of all background processes.')
 
         # clear events and processes
         self.clear_events_and_processes()
@@ -398,7 +403,7 @@ class cliEngine(cmd.Cmd):
 
     def _stop_all_processes(self):
         # print(self.background_processes)
-        logger.info('Stopping all background processes.')
+        self.logger.info('Stopping all background processes.')
 
         # clear events and processes
         self.clear_events_and_processes()
@@ -408,15 +413,15 @@ class cliEngine(cmd.Cmd):
                 process.stop()
                 # print('direkt nach stop...')
                 process.join(timeout=5)
-                logger.info(f'  Process {process.name} stopped.')
+                self.logger.info(f'  Process {process.name} stopped.')
         else:
             print('no processes to stop ...')
 
     def do_quit(self, arg):
         """Quits the CLI."""
-        logger.info("Quitting CLI...")
+        self.logger.info("Quitting CLI...")
         self._stop_all_processes()
-        logger.info("CLI stopped.")
+        self.logger.info("CLI stopped.")
         return True
     
     def help_quit(self):
@@ -425,9 +430,9 @@ class cliEngine(cmd.Cmd):
 
     def do_exit(self, arg):
         """Exits the shell."""
-        logger.info("Exiting CLI...")
+        self.logger.info("Exiting CLI...")
         self._stop_all_processes()
-        logger.info("CLI stopped.")
+        self.logger.info("CLI stopped.")
         return True
 
     def help_exit(self):
@@ -503,7 +508,7 @@ class mainProcess():
         self.stop_all_processes_in_batch()
 
 
-    def start_all_processes_for_batch():
+    def start_all_processes_for_batch(self):
         # start all background processes
         self.logger.info('Starting all background processes.')
         for worker in self.valid_workers:
@@ -514,7 +519,7 @@ class mainProcess():
             print(f'Started process {name}.')
             self.logger.info(f'Started process {name}.')
 
-    def stop_all_processes_in_batch():
+    def stop_all_processes_in_batch(self):
         # stop all background processes
         self.logger.info('Stopping all background processes.')
         for name, process in self.background_processes_for_batch.items():

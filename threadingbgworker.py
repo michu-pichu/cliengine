@@ -10,6 +10,16 @@ class ThreadingBgWorker(threading.Thread):
     General background worker class.
     It have to be running as a Callable object to be invoked by the process.start()
     method of the threading.Thread class.
+    It is a parent class for all background workers.
+    It is a child class of the threading.Thread class.
+    Parameters:
+        - `name`: name of the worker
+        - `event`: event to stop the worker
+        - `timerMin`: time in minutes to run the worker
+        - `slowDownSec`: time in seconds to slow down the worker
+        - `periodicJobSec`: time in seconds to run a periodic job
+        - `logging_on`: enable logging
+        - `cli_name!`: name of the cli for different log file names
     '''
     def __init__(self,
                  name,
@@ -17,7 +27,8 @@ class ThreadingBgWorker(threading.Thread):
                  timerMin = None,
                  slowDownSec = None,
                  periodicJobSec = None,
-                 logging_on = True):
+                 logging_on = True,
+                 cli_name = None):
         
         super().__init__()
         self.name = name
@@ -29,6 +40,7 @@ class ThreadingBgWorker(threading.Thread):
         self.iterations = 0
         self.slowDownSec = slowDownSec
         self.periodicJobSec = periodicJobSec
+        self.cli_name = cli_name
         self.starttime = datetime.now(ZoneInfo('Europe/Paris'))
         # How often to process a periodic job
         self.periodicJobSec = periodicJobSec
@@ -54,7 +66,12 @@ class ThreadingBgWorker(threading.Thread):
 
                 # create file handler for this worker
 
-                fh = logging.FileHandler(f'./logs/{self.name}.log')
+                if not os.path.exists('./logs'):
+                    os.makedirs('./logs')
+                if not self.cli_name:
+                    fh = logging.FileHandler(f'./logs/{self.cli_name}-{self.name}.log')
+                else:
+                    fh = logging.FileHandler(f'./logs/{self.name}.log')
                 fh.setLevel(logging.INFO)
 
                 # create formatter and add it to the handler
