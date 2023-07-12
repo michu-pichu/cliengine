@@ -68,7 +68,7 @@ class ThreadingBgWorker(threading.Thread):
 
                 if not os.path.exists('./logs'):
                     os.makedirs('./logs')
-                if not self.cli_name:
+                if self.cli_name:
                     fh = logging.FileHandler(f'./logs/{self.cli_name}-{self.name}.log')
                 else:
                     fh = logging.FileHandler(f'./logs/{self.name}.log')

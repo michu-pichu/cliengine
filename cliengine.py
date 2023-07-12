@@ -27,8 +27,8 @@ shellname = 'myshell'
 # Test class for background worker (tw)
 # ValidWorker: wt --> Class: TestBgWorker
 class TestBgWorker(ThreadingBgWorker):
-    def __init__(self, name, event):
-        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1, cli_name=shellname)
+    def __init__(self, name, event, cli_name):
+        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1, cli_name=cli_name)
         self.iterations = 0
 
     def addToJobRun(self):
@@ -78,18 +78,19 @@ class cliEngine(cmd.Cmd):
 
         super().__init__()
         self.valid_workers = valid_workers
-        self._make_intro(shellname)
+        self.shellname = shellname
+        self._make_intro()
         self.background_processes = {}
-        self.prompt = f'{shellname}> '
+        self.prompt = f'{self.shellname}> '
         self.events = worker_events
         self.worker_definitons = worker_definitons
         self.logger = logger
-        self.logger.info(f'{shellname} started.')
+        self.logger.info(f'{self.shellname} started.')
 
 
-    def _make_intro(self, shellname):
+    def _make_intro(self):
         intro = '------------------------------------------------------------------------\n'
-        intro += f'Welcome to the {shellname}.\n'
+        intro += f'Welcome to the {self.shellname}.\n'
         intro += '------------------------------------------------------------------------\n'
         intro += '\n'
         intro += '  Type help or ?      to list commands.\n'
@@ -106,10 +107,11 @@ class cliEngine(cmd.Cmd):
         for worker in self.valid_workers:
             intro += f'    {worker}\n'
         intro += '\n'
-        intro += f"Warning: Stopping this {shellname} will also stop all started\n"
+        intro += f"Warning: Stopping this {self.shellname} will also stop all started\n"
         intro += "background processes.\n"
-        intro += f"For more information, please contact the {shellname} administrator.\n"
+        intro += f"For more information, please contact the {self.shellname} administrator.\n"
         intro += '------------------------------------------------------------------------\n'
+        print(intro)
 
 
     def validate_name(self, name):
@@ -209,7 +211,7 @@ class cliEngine(cmd.Cmd):
         if not self.check_name_for_start(name):
             return
 
-        process = self.worker_definitons[name](name=name, event=self.events[name])
+        process = self.worker_definitons[name](name=name, event=self.events[name], cli_name=self.shellname)
         process.start()
         self.background_processes[name] = process
         print(f'Started process: {name}')
@@ -548,7 +550,7 @@ class mainProcess():
         for worker in self.valid_workers:
             name = worker
             print(f'Starting process {name}...')
-            process = self.worker_definitons[name](name=name, event=self.worker_events[name])
+            process = self.worker_definitons[name](name=name, event=self.worker_events[name], cli_name=self.shellname)
             process.start()
             self.background_processes_for_batch[name] = process
             print(f'Started process {name}.')

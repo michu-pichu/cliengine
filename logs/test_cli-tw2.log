@@ -1,0 +1,63 @@
+2023-07-12 11:46:36,676 - tw2 - INFO - Worker tw2 started. Worker status at start:
+2023-07-12 11:46:36,676 - tw2 - INFO - ask for status at 2023-07-12 11:46:36.676791+02:00
+2023-07-12 11:46:36,676 - tw2 - INFO -   worker: tw2
+2023-07-12 11:46:36,676 - tw2 - INFO -   process-id: 3326
+2023-07-12 11:46:36,676 - tw2 - INFO -   running: False
+2023-07-12 11:46:36,676 - tw2 - INFO -   running-enabled: True
+2023-07-12 11:46:36,676 - tw2 - INFO -   counter: 0
+2023-07-12 11:46:36,676 - tw2 - INFO -   started-at: 2023-07-12 11:46:36
+2023-07-12 11:46:36,676 - tw2 - INFO -   last-state-at: None
+2023-07-12 11:46:36,676 - tw2 - INFO -   runtime: 0:00:00.000004
+2023-07-12 11:46:36,676 - tw2 - INFO -   timer: 1.0 / 1 min
+2023-07-12 11:46:36,676 - tw2 - INFO -   will-stop-at: 2023-07-12 11:47:36
+2023-07-12 11:46:36,676 - tw2 - INFO -   slow-down: 1
+2023-07-12 11:46:36,676 - tw2 - INFO -   periodic-job-evry-sec: None
+2023-07-12 11:46:36,677 - tw2 - INFO -   iterations: 0
+2023-07-12 11:46:36,677 - tw2 - INFO - Starting for: 1 minutes, will stop at: 2023-07-12 11:47:36.676675+02:00.
+2023-07-12 11:46:39,677 - tw2 - INFO - stop request: True at 2023-07-12 11:46:39.677407+02:00
+2023-07-12 11:46:39,677 - tw2 - INFO - ask for status at 2023-07-12 11:46:39.677502+02:00
+2023-07-12 11:46:39,677 - tw2 - INFO -   worker: tw2
+2023-07-12 11:46:39,677 - tw2 - INFO -   process-id: 3326
+2023-07-12 11:46:39,677 - tw2 - INFO -   running: True
+2023-07-12 11:46:39,677 - tw2 - INFO -   running-enabled: False
+2023-07-12 11:46:39,677 - tw2 - INFO -   counter: 4
+2023-07-12 11:46:39,677 - tw2 - INFO -   started-at: 2023-07-12 11:46:36
+2023-07-12 11:46:39,677 - tw2 - INFO -   last-state-at: 2023-07-12 11:46:36
+2023-07-12 11:46:39,677 - tw2 - INFO -   runtime: 0:00:03.000806
+2023-07-12 11:46:39,677 - tw2 - INFO -   timer: 0.9 / 1 min
+2023-07-12 11:46:39,677 - tw2 - INFO -   will-stop-at: 2023-07-12 11:47:36
+2023-07-12 11:46:39,677 - tw2 - INFO -   slow-down: 1
+2023-07-12 11:46:39,677 - tw2 - INFO -   periodic-job-evry-sec: None
+2023-07-12 11:46:39,677 - tw2 - INFO -   iterations: 4
+2023-07-12 11:46:59,697 - tw2 - INFO - Worker tw2 started. Worker status at start:
+2023-07-12 11:46:59,697 - tw2 - INFO - ask for status at 2023-07-12 11:46:59.697523+02:00
+2023-07-12 11:46:59,697 - tw2 - INFO -   worker: tw2
+2023-07-12 11:46:59,697 - tw2 - INFO -   process-id: 3365
+2023-07-12 11:46:59,697 - tw2 - INFO -   running: False
+2023-07-12 11:46:59,697 - tw2 - INFO -   running-enabled: True
+2023-07-12 11:46:59,697 - tw2 - INFO -   counter: 0
+2023-07-12 11:46:59,697 - tw2 - INFO -   started-at: 2023-07-12 11:46:59
+2023-07-12 11:46:59,697 - tw2 - INFO -   last-state-at: None
+2023-07-12 11:46:59,697 - tw2 - INFO -   runtime: 0:00:00.000008
+2023-07-12 11:46:59,697 - tw2 - INFO -   timer: 1.0 / 1 min
+2023-07-12 11:46:59,697 - tw2 - INFO -   will-stop-at: 2023-07-12 11:47:59
+2023-07-12 11:46:59,697 - tw2 - INFO -   slow-down: 1
+2023-07-12 11:46:59,697 - tw2 - INFO -   periodic-job-evry-sec: None
+2023-07-12 11:46:59,697 - tw2 - INFO -   iterations: 0
+2023-07-12 11:46:59,697 - tw2 - INFO - Starting for: 1 minutes, will stop at: 2023-07-12 11:47:59.697380+02:00.
+2023-07-12 11:47:24,903 - tw2 - INFO - ask for status at 2023-07-12 11:47:24.903630+02:00
+2023-07-12 11:47:35,983 - tw2 - INFO - stop request: True at 2023-07-12 11:47:35.983217+02:00
+2023-07-12 11:47:36,702 - tw2 - INFO - ask for status at 2023-07-12 11:47:36.702546+02:00
+2023-07-12 11:47:36,702 - tw2 - INFO -   worker: tw2
+2023-07-12 11:47:36,702 - tw2 - INFO -   process-id: 3365
+2023-07-12 11:47:36,702 - tw2 - INFO -   running: True
+2023-07-12 11:47:36,702 - tw2 - INFO -   running-enabled: False
+2023-07-12 11:47:36,702 - tw2 - INFO -   counter: 38
+2023-07-12 11:47:36,702 - tw2 - INFO -   started-at: 2023-07-12 11:46:59
+2023-07-12 11:47:36,702 - tw2 - INFO -   last-state-at: 2023-07-12 11:47:24
+2023-07-12 11:47:36,702 - tw2 - INFO -   runtime: 0:00:37.005121
+2023-07-12 11:47:36,702 - tw2 - INFO -   timer: 0.4 / 1 min
+2023-07-12 11:47:36,702 - tw2 - INFO -   will-stop-at: 2023-07-12 11:47:59
+2023-07-12 11:47:36,702 - tw2 - INFO -   slow-down: 1
+2023-07-12 11:47:36,702 - tw2 - INFO -   periodic-job-evry-sec: None
+2023-07-12 11:47:36,702 - tw2 - INFO -   iterations: 38
