@@ -6,12 +6,10 @@ import logging
 import signal
 import threading
 import argparse
+import os
 
-# valid workers
-class ValidWorkers(str, Enum):
-   testworker1 = 'tw1'
-   testworker2 = 'tw2'
-   testworker3 = 'tw3'
+# valid workers, must be a tuple (hashable type)
+valid_workers = ('tw1', 'tw2', 'tw3')
 
 # valid timer modes
 class ValidTimerModes(str, Enum):
@@ -45,6 +43,9 @@ class TestBgWorker(ThreadingBgWorker):
     def taskForStop(self):
         print(f'Worker {self.name} stopped.')
 
+# For real background workers, the class must be provided
+#  in a separate definition file (e.g. myworker.py)
+#  and imported. The class must be derived from ThreadingBgWorker.
 worker_definitons = {
     'tw1': TestBgWorker,
     'tw2': TestBgWorker,
@@ -53,22 +54,35 @@ worker_definitons = {
 # --------- Valid Workers - Definitions ------------
 
 
-# Class leadApiCLI that manages background processes
+# Class cliEngine that manages background processes
 class cliEngine(cmd.Cmd):
-
+    """CLI engine for managing background processes.
+    The engine is based on the cmd module.
+    Processes are started and stopped by the user.
+    The engine provides a prompt and a command line interface.
+    The engine is used by the mainProcess class.
+    Parameters:
+        - `shellname`: Name of the shell.
+        - `worker_events`: Dictionary of worker events.
+        - `valid_workers`: Tuple of valid workers.
+        - `worker_definitons`: Dictionary of worker definitions.
+        - `logger`: Logger object.
+    """
 
     def __init__(self,
                  shellname,
                  worker_events,
                  valid_workers,
+                 worker_definitons,
                  logger):
 
         super().__init__()
+        self.valid_workers = valid_workers
         self._make_intro(shellname)
         self.background_processes = {}
         self.prompt = f'{shellname}> '
         self.events = worker_events
-        self.valid_workers = valid_workers
+        self.worker_definitons = worker_definitons
         self.logger = logger
         self.logger.info(f'{shellname} started.')
 
@@ -89,8 +103,8 @@ class cliEngine(cmd.Cmd):
         intro += "  Type exit or quit   to leave the shell.\n"
         intro += '\n'
         intro += "  Valid names are:\n"
-        for worker in ValidWorkers:
-            intro += f'    {worker.value}\n'
+        for worker in self.valid_workers:
+            intro += f'    {worker}\n'
         intro += '\n'
         intro += f"Warning: Stopping this {shellname} will also stop all started\n"
         intro += "background processes.\n"
@@ -101,10 +115,13 @@ class cliEngine(cmd.Cmd):
     def validate_name(self, name):
         """Checks if the procesname is valid."""
         check = False
-        for worker in ValidWorkers:
-            if name == worker.value:
-                check = True
-                break
+        if name in self.valid_workers:
+            check = True
+
+        # for worker in self.valid_workers:
+        #     if name == worker:
+        #         check = True
+        #         break
         
         if not check:
             print(f'Error: Process {name} does not exist or is not valid.')
@@ -192,7 +209,7 @@ class cliEngine(cmd.Cmd):
         if not self.check_name_for_start(name):
             return
 
-        process = worker_definitons[name](name=name, event=self.events[name])
+        process = self.worker_definitons[name](name=name, event=self.events[name])
         process.start()
         self.background_processes[name] = process
         print(f'Started process: {name}')
@@ -203,8 +220,8 @@ class cliEngine(cmd.Cmd):
         print('Starts a background process with the given name.')
         print('Usage: start <name>')
         print('Valid names are:')
-        for worker in ValidWorkers:
-            print(f'  {worker.value}')
+        for worker in self.valid_workers:
+            print(f'  {worker}')
 
 
     def do_stop(self, name):
@@ -255,7 +272,7 @@ class cliEngine(cmd.Cmd):
             self.help_timer()
             return
         
-        # check if worker_name is in ValidWorkers Enum
+        # check if worker_name is in self.valid_workers Enum
         if not self.check_name_for_prozess_update(worker_name):
             self.help_timer()
             return
@@ -305,7 +322,8 @@ class cliEngine(cmd.Cmd):
     def help_timer(self):
         print('Usage: timer <worker_name> <timer_mode> <timer_value_min>')
         print('   or: timer <worker_name> clear')
-        line = '   worker_name: ' + str([member.value for member in ValidWorkers])
+
+        line = '   worker_name: ' + str([member for member in self.valid_workers])
         print(line)
         line = '   timer_mode: ' + str([member.value for member in ValidTimerModes])
         print(line)
@@ -445,20 +463,30 @@ class cliEngine(cmd.Cmd):
 # Class to use after "if __name__ == '__main__':"
 
 class mainProcess():
+    '''Main process of the shell.
+    The main process is the process that starts the shell.
+    It is the only process that can start background processes.
+    Instantiate this class after the "if __name__ == '__main__':" line.
+    Pass the name of the shell and the valid workers as arguments.
+    Parameters:
+        - `shellname`: name of the shell
+        - `valid_workers`: tuple of valid workers
+        - `worker_definitons`: dict of worker definitions
+    '''
 
     def __init__(self,
                  shellname,
-                 valid_workers,
+                 valid_workers = valid_workers,
                  worker_definitons = worker_definitons):
 
         self.shellname = shellname
-        self.valid_workers = valid_workers,
+        self.valid_workers = valid_workers
         self.background_processes_for_batch = {}
         self.worker_definitons = worker_definitons
         self.worker_events = {}
         
         for worker in self.valid_workers:
-            self.worker_events[worker.value] = threading.Event()
+            self.worker_events[worker] = threading.Event()
 
         # parse command line arguments
         self.parser = argparse.ArgumentParser(description=f'CLI for the {self.shellname}.')
@@ -470,6 +498,8 @@ class mainProcess():
         self.logger.setLevel(logging.INFO)
 
         # create a file handler
+        if not os.path.exists('./logs'):
+            os.makedirs('./logs')
         self.handler = logging.FileHandler(f'./logs/{self.shellname}.log')
         self.handler.setLevel(logging.INFO)
 
@@ -492,7 +522,11 @@ class mainProcess():
         elif self.args.mode == 'cli':
             self.logger.info(f'----- Starting {self.shellname} in CLI mode. -------')
             # Start CLI
-            self.cli = cliEngine(shellname=self.shellname, worker_events=self.worker_events)
+            self.cli = cliEngine(shellname=self.shellname,
+                                 worker_events=self.worker_events,
+                                 valid_workers=self.valid_workers,
+                                 worker_definitons=self.worker_definitons,
+                                 logger=self.logger)
             self.cli.cmdloop()
 
         else:
@@ -512,7 +546,8 @@ class mainProcess():
         # start all background processes
         self.logger.info('Starting all background processes.')
         for worker in self.valid_workers:
-            name = worker.value
+            name = worker
+            print(f'Starting process {name}...')
             process = self.worker_definitons[name](name=name, event=self.worker_events[name])
             process.start()
             self.background_processes_for_batch[name] = process

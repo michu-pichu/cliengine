@@ -1,0 +1,102 @@
+2023-07-12 10:52:11,893 - tw1 - INFO - Worker tw1 started. Worker status at start:
+2023-07-12 10:52:11,893 - tw1 - INFO - ask for status at 2023-07-12 10:52:11.893542+02:00
+2023-07-12 10:52:11,893 - tw1 - INFO -   worker: tw1
+2023-07-12 10:52:11,893 - tw1 - INFO -   process-id: 971
+2023-07-12 10:52:11,893 - tw1 - INFO -   running: False
+2023-07-12 10:52:11,893 - tw1 - INFO -   running-enabled: True
+2023-07-12 10:52:11,893 - tw1 - INFO -   counter: 0
+2023-07-12 10:52:11,893 - tw1 - INFO -   started-at: 2023-07-12 10:52:11
+2023-07-12 10:52:11,893 - tw1 - INFO -   last-state-at: None
+2023-07-12 10:52:11,893 - tw1 - INFO -   runtime: 0:00:00.000008
+2023-07-12 10:52:11,893 - tw1 - INFO -   timer: 1.0 / 1 min
+2023-07-12 10:52:11,893 - tw1 - INFO -   will-stop-at: 2023-07-12 10:53:11
+2023-07-12 10:52:11,893 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:52:11,893 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:52:11,893 - tw1 - INFO -   iterations: 0
+2023-07-12 10:52:11,893 - tw1 - INFO - Starting for: 1 minutes, will stop at: 2023-07-12 10:53:11.893416+02:00.
+2023-07-12 10:52:25,255 - tw1 - INFO - stop request: True at 2023-07-12 10:52:25.255592+02:00
+2023-07-12 10:52:25,895 - tw1 - INFO - ask for status at 2023-07-12 10:52:25.895703+02:00
+2023-07-12 10:52:25,895 - tw1 - INFO -   worker: tw1
+2023-07-12 10:52:25,895 - tw1 - INFO -   process-id: 971
+2023-07-12 10:52:25,895 - tw1 - INFO -   running: True
+2023-07-12 10:52:25,895 - tw1 - INFO -   running-enabled: False
+2023-07-12 10:52:25,895 - tw1 - INFO -   counter: 15
+2023-07-12 10:52:25,895 - tw1 - INFO -   started-at: 2023-07-12 10:52:11
+2023-07-12 10:52:25,895 - tw1 - INFO -   last-state-at: 2023-07-12 10:52:11
+2023-07-12 10:52:25,895 - tw1 - INFO -   runtime: 0:00:14.002243
+2023-07-12 10:52:25,896 - tw1 - INFO -   timer: 0.8 / 1 min
+2023-07-12 10:52:25,896 - tw1 - INFO -   will-stop-at: 2023-07-12 10:53:11
+2023-07-12 10:52:25,896 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:52:25,896 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:52:25,896 - tw1 - INFO -   iterations: 15
+2023-07-12 10:54:06,681 - tw1 - INFO - Worker tw1 started. Worker status at start:
+2023-07-12 10:54:06,681 - tw1 - INFO - ask for status at 2023-07-12 10:54:06.681202+02:00
+2023-07-12 10:54:06,681 - tw1 - INFO -   worker: tw1
+2023-07-12 10:54:06,681 - tw1 - INFO -   process-id: 1102
+2023-07-12 10:54:06,681 - tw1 - INFO -   running: False
+2023-07-12 10:54:06,681 - tw1 - INFO -   running-enabled: True
+2023-07-12 10:54:06,681 - tw1 - INFO -   counter: 0
+2023-07-12 10:54:06,681 - tw1 - INFO -   started-at: 2023-07-12 10:54:06
+2023-07-12 10:54:06,681 - tw1 - INFO -   last-state-at: None
+2023-07-12 10:54:06,681 - tw1 - INFO -   runtime: 0:00:00.000013
+2023-07-12 10:54:06,681 - tw1 - INFO -   timer: 1.0 / 1 min
+2023-07-12 10:54:06,681 - tw1 - INFO -   will-stop-at: 2023-07-12 10:55:06
+2023-07-12 10:54:06,681 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:54:06,681 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:54:06,681 - tw1 - INFO -   iterations: 0
+2023-07-12 10:54:06,681 - tw1 - INFO - Starting for: 1 minutes, will stop at: 2023-07-12 10:55:06.681073+02:00.
+2023-07-12 10:54:19,008 - tw1 - INFO - set_timer, minutes: 5.0, mode: set
+2023-07-12 10:54:27,263 - tw1 - INFO - ask for status at 2023-07-12 10:54:27.263468+02:00
+2023-07-12 10:54:35,263 - tw1 - INFO - stop request: True at 2023-07-12 10:54:35.263482+02:00
+2023-07-12 10:54:35,685 - tw1 - INFO - ask for status at 2023-07-12 10:54:35.685524+02:00
+2023-07-12 10:54:35,685 - tw1 - INFO -   worker: tw1
+2023-07-12 10:54:35,685 - tw1 - INFO -   process-id: 1102
+2023-07-12 10:54:35,685 - tw1 - INFO -   running: True
+2023-07-12 10:54:35,685 - tw1 - INFO -   running-enabled: False
+2023-07-12 10:54:35,685 - tw1 - INFO -   counter: 30
+2023-07-12 10:54:35,685 - tw1 - INFO -   started-at: 2023-07-12 10:54:06
+2023-07-12 10:54:35,685 - tw1 - INFO -   last-state-at: 2023-07-12 10:54:27
+2023-07-12 10:54:35,685 - tw1 - INFO -   runtime: 0:00:29.004404
+2023-07-12 10:54:35,685 - tw1 - INFO -   timer: 4.7 / 5.0 min
+2023-07-12 10:54:35,685 - tw1 - INFO -   will-stop-at: 2023-07-12 10:59:19
+2023-07-12 10:54:35,685 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:54:35,685 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:54:35,685 - tw1 - INFO -   iterations: 30
+2023-07-12 10:55:36,784 - tw1 - INFO - Worker tw1 started. Worker status at start:
+2023-07-12 10:55:36,784 - tw1 - INFO - ask for status at 2023-07-12 10:55:36.784919+02:00
+2023-07-12 10:55:36,784 - tw1 - INFO -   worker: tw1
+2023-07-12 10:55:36,785 - tw1 - INFO -   process-id: 1338
+2023-07-12 10:55:36,785 - tw1 - INFO -   running: False
+2023-07-12 10:55:36,785 - tw1 - INFO -   running-enabled: True
+2023-07-12 10:55:36,785 - tw1 - INFO -   counter: 0
+2023-07-12 10:55:36,785 - tw1 - INFO -   started-at: 2023-07-12 10:55:36
+2023-07-12 10:55:36,785 - tw1 - INFO -   last-state-at: None
+2023-07-12 10:55:36,785 - tw1 - INFO -   runtime: 0:00:00.000013
+2023-07-12 10:55:36,785 - tw1 - INFO -   timer: 1.0 / 1 min
+2023-07-12 10:55:36,785 - tw1 - INFO -   will-stop-at: 2023-07-12 10:56:36
+2023-07-12 10:55:36,785 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:55:36,785 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:55:36,785 - tw1 - INFO -   iterations: 0
+2023-07-12 10:55:36,785 - tw1 - INFO - Starting for: 1 minutes, will stop at: 2023-07-12 10:56:36.784787+02:00.
+2023-07-12 10:55:59,335 - tw1 - INFO - ask for status at 2023-07-12 10:55:59.335262+02:00
+2023-07-12 10:56:01,695 - tw1 - INFO - ask for status at 2023-07-12 10:56:01.695615+02:00
+2023-07-12 10:56:02,951 - tw1 - INFO - ask for status at 2023-07-12 10:56:02.951315+02:00
+2023-07-12 10:56:04,887 - tw1 - INFO - ask for status at 2023-07-12 10:56:04.887517+02:00
+2023-07-12 10:56:32,567 - tw1 - INFO - ask for status at 2023-07-12 10:56:32.567526+02:00
+2023-07-12 10:56:34,287 - tw1 - INFO - ask for status at 2023-07-12 10:56:34.287354+02:00
+2023-07-12 10:56:36,792 - tw1 - INFO - TimerEnd at 2023-07-12 10:56:36.792229+02:00
+2023-07-12 10:56:36,792 - tw1 - INFO - ask for status at 2023-07-12 10:56:36.792387+02:00
+2023-07-12 10:56:36,792 - tw1 - INFO -   worker: tw1
+2023-07-12 10:56:36,792 - tw1 - INFO -   process-id: 1338
+2023-07-12 10:56:36,792 - tw1 - INFO -   running: True
+2023-07-12 10:56:36,792 - tw1 - INFO -   running-enabled: True
+2023-07-12 10:56:36,792 - tw1 - INFO -   counter: 60
+2023-07-12 10:56:36,792 - tw1 - INFO -   started-at: 2023-07-12 10:55:36
+2023-07-12 10:56:36,792 - tw1 - INFO -   last-state-at: 2023-07-12 10:56:34
+2023-07-12 10:56:36,792 - tw1 - INFO -   runtime: 0:00:59.007360
+2023-07-12 10:56:36,792 - tw1 - INFO -   timer: -0.0 / 1 min
+2023-07-12 10:56:36,792 - tw1 - INFO -   will-stop-at: 2023-07-12 10:56:36
+2023-07-12 10:56:36,792 - tw1 - INFO -   slow-down: 1
+2023-07-12 10:56:36,792 - tw1 - INFO -   periodic-job-evry-sec: None
+2023-07-12 10:56:36,792 - tw1 - INFO -   iterations: 60
+2023-07-12 10:56:53,223 - tw1 - INFO - stop request: True at 2023-07-12 10:56:53.223362+02:00

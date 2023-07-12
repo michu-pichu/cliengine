@@ -1,0 +1,44 @@
+2023-07-12 10:38:24,123 - test_cli - INFO - ----- Starting test_cli in BATCH mode. -----
+2023-07-12 10:38:24,123 - test_cli - INFO - Starting all background processes.
+2023-07-12 10:41:57,667 - test_cli - INFO - ----- Starting test_cli in BATCH mode. -----
+2023-07-12 10:41:57,667 - test_cli - INFO - Starting all background processes.
+2023-07-12 10:52:11,892 - test_cli - INFO - ----- Starting test_cli in BATCH mode. -----
+2023-07-12 10:52:11,892 - test_cli - INFO - Starting all background processes.
+2023-07-12 10:52:11,894 - test_cli - INFO - Started process tw1.
+2023-07-12 10:52:11,894 - test_cli - INFO - Started process tw2.
+2023-07-12 10:52:11,895 - test_cli - INFO - Started process tw3.
+2023-07-12 10:52:25,255 - test_cli - INFO - Signal received. Stop all background processes and exit...
+2023-07-12 10:52:25,255 - test_cli - INFO - Stopping all background processes.
+2023-07-12 10:52:25,896 - test_cli - INFO - Stopped process tw1.
+2023-07-12 10:52:26,896 - test_cli - INFO - Stopped process tw2.
+2023-07-12 10:52:26,897 - test_cli - INFO - Stopped process tw3.
+2023-07-12 10:52:59,594 - test_cli - INFO - ----- Starting test_cli in CLI mode. -------
+2023-07-12 10:53:52,203 - test_cli - INFO - ----- Starting test_cli in CLI mode. -------
+2023-07-12 10:53:52,203 - test_cli - INFO - test_cli started.
+2023-07-12 10:54:06,680 - test_cli - INFO - Starting process: tw1
+2023-07-12 10:54:06,681 - test_cli - INFO - Started process: tw1
+2023-07-12 10:54:19,008 - test_cli - INFO - Set timer: tw1, timer_mode set, 5.0 minutes.
+2023-07-12 10:54:27,263 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:54:35,263 - test_cli - INFO - Quitting CLI...
+2023-07-12 10:54:35,263 - test_cli - INFO - Stopping all background processes.
+2023-07-12 10:54:35,686 - test_cli - INFO -   Process tw1 stopped.
+2023-07-12 10:54:35,686 - test_cli - INFO - CLI stopped.
+2023-07-12 10:55:32,657 - test_cli - INFO - ----- Starting test_cli in CLI mode. -------
+2023-07-12 10:55:32,657 - test_cli - INFO - test_cli started.
+2023-07-12 10:55:36,784 - test_cli - INFO - Starting process: tw1
+2023-07-12 10:55:36,785 - test_cli - INFO - Started process: tw1
+2023-07-12 10:55:42,600 - test_cli - INFO - Starting process: tw2
+2023-07-12 10:55:42,601 - test_cli - INFO - Started process: tw2
+2023-07-12 10:55:49,296 - test_cli - INFO - Starting process: tw3
+2023-07-12 10:55:49,297 - test_cli - INFO - Started process: tw3
+2023-07-12 10:55:59,335 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:01,695 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:02,951 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:04,887 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:32,567 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:34,287 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:56:53,223 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:57:31,159 - test_cli - INFO - Showing status of all background processes.
+2023-07-12 10:57:39,719 - test_cli - INFO - Quitting CLI...
+2023-07-12 10:57:39,719 - test_cli - INFO - Stopping all background processes.
+2023-07-12 10:57:39,719 - test_cli - INFO - CLI stopped.
