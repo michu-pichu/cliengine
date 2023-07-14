@@ -28,7 +28,8 @@ class ThreadingBgWorker(threading.Thread):
                  slowDownSec = None,
                  periodicJobSec = None,
                  logging_on = True,
-                 cli_name = None):
+                 cli_name = None,
+                 log_directory = './logs'):
         
         super().__init__()
         self.name = name
@@ -66,12 +67,12 @@ class ThreadingBgWorker(threading.Thread):
 
                 # create file handler for this worker
 
-                if not os.path.exists('./logs'):
-                    os.makedirs('./logs')
+                if not os.path.exists(log_directory):
+                    os.makedirs(log_directory)
                 if self.cli_name:
-                    fh = logging.FileHandler(f'./logs/{self.cli_name}-{self.name}.log')
+                    fh = logging.FileHandler(f'{log_directory}/{self.cli_name}-{self.name}.log')
                 else:
-                    fh = logging.FileHandler(f'./logs/{self.name}.log')
+                    fh = logging.FileHandler(f'{log_directory}/{self.name}.log')
                 fh.setLevel(logging.INFO)
 
                 # create formatter and add it to the handler
