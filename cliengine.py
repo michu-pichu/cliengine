@@ -1,6 +1,5 @@
 import cmd
 import sys
-# import subprocess
 from enum import Enum
 import logging
 import signal
@@ -22,13 +21,14 @@ class ValidTimerModes(str, Enum):
 from threadingbgworker import ThreadingBgWorker
 
 shellname = 'myshell'
+log_directory = './logs'
 
 # --------- Valid Workers - Definitions ------------
 # Test class for background worker (tw)
 # ValidWorker: wt --> Class: TestBgWorker
 class TestBgWorker(ThreadingBgWorker):
-    def __init__(self, name, event, cli_name):
-        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1, cli_name=cli_name)
+    def __init__(self, name, event, cli_name, log_directory=log_directory):
+        super().__init__(name=name, event=event, slowDownSec=1, timerMin=1, cli_name=cli_name, log_directory=log_directory)
         self.iterations = 0
 
     def addToJobRun(self):
@@ -74,7 +74,8 @@ class cliEngine(cmd.Cmd):
                  worker_events,
                  valid_workers,
                  worker_definitons,
-                 logger):
+                 logger,
+                 log_directory):
 
         super().__init__()
         self.valid_workers = valid_workers
@@ -86,6 +87,7 @@ class cliEngine(cmd.Cmd):
         self.worker_definitons = worker_definitons
         self.logger = logger
         self.logger.info(f'{self.shellname} started.')
+        self.log_directory = log_directory
 
 
     def _make_intro(self):
@@ -211,7 +213,10 @@ class cliEngine(cmd.Cmd):
         if not self.check_name_for_start(name):
             return
 
-        process = self.worker_definitons[name](name=name, event=self.events[name], cli_name=self.shellname)
+        process = self.worker_definitons[name](name=name,
+                                               event=self.events[name],
+                                               cli_name=self.shellname,
+                                               log_directory=self.log_directory)
         process.start()
         self.background_processes[name] = process
         print(f'Started process: {name}')
@@ -479,13 +484,15 @@ class mainProcess():
     def __init__(self,
                  shellname,
                  valid_workers = valid_workers,
-                 worker_definitons = worker_definitons):
+                 worker_definitons = worker_definitons,
+                 log_directory = './logs'):
 
         self.shellname = shellname
         self.valid_workers = valid_workers
         self.background_processes_for_batch = {}
         self.worker_definitons = worker_definitons
         self.worker_events = {}
+        self.log_directory = log_directory
         
         for worker in self.valid_workers:
             self.worker_events[worker] = threading.Event()
@@ -499,10 +506,10 @@ class mainProcess():
         self.logger = logging.getLogger(self.shellname)
         self.logger.setLevel(logging.INFO)
 
-        # create a file handler
-        if not os.path.exists('./logs'):
-            os.makedirs('./logs')
-        self.handler = logging.FileHandler(f'./logs/{self.shellname}.log')
+        # create a file handler for CLI-log
+        if not os.path.exists(self.log_directory):
+            os.makedirs(self.log_directory)
+        self.handler = logging.FileHandler(f'{self.log_directory}/{self.shellname}.log')
         self.handler.setLevel(logging.INFO)
 
         # create a logging format and add it to the handler
@@ -550,7 +557,10 @@ class mainProcess():
         for worker in self.valid_workers:
             name = worker
             print(f'Starting process {name}...')
-            process = self.worker_definitons[name](name=name, event=self.worker_events[name], cli_name=self.shellname)
+            process = self.worker_definitons[name](name=name,
+                                                   event=self.worker_events[name],
+                                                   cli_name=self.shellname,
+                                                   log_directory=self.log_directory)
             process.start()
             self.background_processes_for_batch[name] = process
             print(f'Started process {name}.')
