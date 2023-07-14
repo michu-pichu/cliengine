@@ -8,6 +8,7 @@ import argparse
 import os
 
 # valid workers, must be a tuple (hashable type)
+# For one worker please type: ('worker',) <-- see the , in tuple!!!
 valid_workers = ('tw1', 'tw2', 'tw3')
 
 # valid timer modes
