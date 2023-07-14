@@ -1,4 +1,3 @@
-
 # `cliengine` Module Documentation
 
 The `cliengine` module provides a Command Line Interface (CLI) for managing background processes. It is based on Python's `cmd` module and allows users to start, stop, and check the status of background processes. Background processes will be started in a separate thread and can be stopped by the user or by a timer.
@@ -35,7 +34,7 @@ This class provides the Command Line Interface (CLI) based on the `cmd` module. 
 
 ```python
 class cliEngine(cmd.Cmd):
-    def __init__(self, shellname, worker_events, valid_workers, worker_definitons, logger):
+    def __init__(self, shellname, worker_events, valid_workers, worker_definitons, logger, log_directory):
         ...
     ...
 ```
