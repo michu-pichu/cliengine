@@ -87,7 +87,6 @@ class ThreadingBgWorker(threading.Thread):
 
             # log the start of the worker
             self.loggi.info(f'Worker {self.name} started. Worker status at start:')
-            self.log_status()
 
     # stop request will be checked for every iteration to stop the thread cleanly
     def askForStop(self):
